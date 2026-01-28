@@ -10,16 +10,23 @@ import jakarta.persistence.Persistence;
 
 @ApplicationScoped
 public class JPAProducer {
-	private final EntityManagerFactory emf =
-		      Persistence.createEntityManagerFactory("jsfPU");
+	
+	private EntityManagerFactory emf;
 
-		  @Produces
-		  @RequestScoped
-		  public EntityManager em() {
-		    return emf.createEntityManager();
-		  }
+	  private EntityManagerFactory getEmf() {
+	    if (emf == null) {
+	      emf = Persistence.createEntityManagerFactory("jsfPU");
+	    }
+	    return emf;
+	  }
 
-		  public void close(@Disposes EntityManager em) {
-		    if (em.isOpen()) em.close();
-		  }
+	  @Produces
+	  @RequestScoped
+	  public EntityManager em() {
+	    return getEmf().createEntityManager();
+	  }
+
+	  public void close(@Disposes EntityManager em) {
+	    if (em.isOpen()) em.close();
+	  }
 }
