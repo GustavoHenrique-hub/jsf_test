@@ -6,12 +6,13 @@ import java.util.List;
 
 import br.enterprise.gusta.jsf_test.model.entity.UsuarioEntity;
 import br.enterprise.gusta.jsf_test.service.UsuarioService;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 @Named
-@ViewScoped
+@ApplicationScoped
 public class UsuarioBean implements Serializable {
 
 	@Inject
@@ -21,6 +22,8 @@ public class UsuarioBean implements Serializable {
 	
 	private List<UsuarioEntity> lista = new ArrayList<UsuarioEntity>();
 
+	private String mensagemEditar = new String();
+
 	public void salvar() {
 		service.cadastrar(usuario);
 		usuario = new UsuarioEntity();
@@ -29,6 +32,8 @@ public class UsuarioBean implements Serializable {
 	public void listar(){
 		lista = service.listar();
 	}
+
+	public void editar() { mensagemEditar = service.editar(usuario.getId(), usuario); }
 
 	public UsuarioEntity getUsuario() {
 		return usuario;

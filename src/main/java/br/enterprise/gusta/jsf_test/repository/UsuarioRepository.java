@@ -19,4 +19,10 @@ public class UsuarioRepository {
 	public List<UsuarioEntity> listar() {
 		return em.createQuery("select u from UsuarioEntity u", UsuarioEntity.class).getResultList();
 	}
+
+	public void editar (Long id, UsuarioEntity u) {
+		if (id != null){
+			em.merge(u);
+		}
+	}
 }

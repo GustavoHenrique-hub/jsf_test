@@ -29,4 +29,11 @@ public class UsuarioService {
 		em.getTransaction().commit();
 		return repo.listar();
 	}
+
+	public String editar(Long id, UsuarioEntity u) {
+		em.getTransaction().begin();
+		repo.editar(id, u);
+		em.getTransaction().commit();
+		return "Usuário alterado";
+	}
 }
